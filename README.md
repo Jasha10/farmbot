@@ -1,6 +1,8 @@
 # farmbot
 If GNU stow is a "symlink farm manager," this tool will be a multi-purpose farming robot.
 
+See INSTALL.md and USAGE.md to get started.
+
 ## Vision & Goals:
 I spend lots of time updating dependencies -- both locally installed tools and dependency pins on software projects.
 Keeping these up to date improves developer quality of life.
