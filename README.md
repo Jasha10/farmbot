@@ -1,7 +1,7 @@
 # farmbot
 If GNU stow is a "symlink farm manager," this tool will be a multi-purpose farming robot. A symlink farmer bot and as well as a package manager manager bot (a robot that manages package managers).
 
-See INSTALL.md and USAGE.md to get started.
+See [INSTALL.md](INSTALL.md) and [USAGE.md](USAGE.md) to get started.
 
 ## Vision & Goals:
 I spend lots of time updating dependencies -- both locally installed tools and dependency pins on software projects.
@@ -26,7 +26,7 @@ Do this well by manipulating in-memory tree structures representing files, simul
 
 Open question: Is this vision trying to solve some of the same things as those infra-as-code / config management / automation projects like OpenTofu / Ansible / Puppet / Saltstack / ...? I've never used them.
 
-### Managing software versions
+#### Managing software versions
 - Automate bumping versions installed software
   - use first-class tools like `cargo`, `brew`, `apt`, `pipx`, etc. to install and manage software locally
   - Maintain a knowledge graph:
@@ -40,12 +40,15 @@ Open question: Is this vision trying to solve some of the same things as those i
   - tools / scripts / commands used for updating software
 - For bumping version pins in software projects, be able to create a new local branch, bump the version pin, and create a github draft PR from the new branch
 - Handle multi-step processes gracefully, e.g. "upgrade the software version and then restart the associated service."
+- Keep track of dependencies not handled by package managers, e.g. "Installing this rust project with cargo requires cmake".
+  - possibly install cmake via another package manager as a prerequisite
+  - keep track of where the sentence "Installing this rust project with cargo requires cmake" appears in the rust project's README. Periodically query that README.md to see if the sentence (and its surrounding context) still appear in the README.
 
-#### Tracking Installed Software
+##### Tracking Installed Software
 - Query package managers (`cargo`, `apt`, etc) to see what software is currently installed, the version and source, etc.
 - Be able to distinguish software installed from a local source vs from an external repo (e.g. `cargo install --path . vs `cargo install <hosted-package>`)
 
-#### Managing Installed Software
+##### Managing Installed Software
 - Take action (with possible user confirmation) to install, upgrade, or uninstall software.
 
 ### Inspiration

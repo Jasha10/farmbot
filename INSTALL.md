@@ -1,0 +1,1 @@
+Nothing to install -- this project is just a skelaton for now.
