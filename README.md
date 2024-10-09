@@ -1,5 +1,5 @@
 # farmbot
-If GNU stow is a "symlink farm manager," this tool will be a multi-purpose farming robot.
+If GNU stow is a "symlink farm manager," this tool will be a multi-purpose farming robot. A symlink farmer bot and as well as a package manager manager bot (a robot that manages package managers).
 
 See INSTALL.md and USAGE.md to get started.
 
@@ -20,6 +20,12 @@ Below are some use-cases, though I hope to make the framework extensible enough 
 Create a framework for taking follow-up actions after stowing a package, e.g. `stow my-package` followed by `cd target-dir && stow -t .git stow-t.git` to stow a `.git/info/exclude` file.
 Do this well by manipulating in-memory tree structures representing files, simulating what the tree "should look like" (to detect if the farm is out of sync), and simulating what the tree will look like after an action such as `stow` is taken.
 
+### Managing Package Managers
+- keep track of software installed on the system via various package managers
+- possibly change the state of the system to match a specification
+
+Open question: Is this vision trying to solve some of the same things as those infra-as-code / config management / automation projects like OpenTofu / Ansible / Puppet / Saltstack / ...? I've never used them.
+
 ### Managing software versions
 - Automate bumping versions installed software
   - use first-class tools like `cargo`, `brew`, `apt`, `pipx`, etc. to install and manage software locally
@@ -34,6 +40,13 @@ Do this well by manipulating in-memory tree structures representing files, simul
   - tools / scripts / commands used for updating software
 - For bumping version pins in software projects, be able to create a new local branch, bump the version pin, and create a github draft PR from the new branch
 - Handle multi-step processes gracefully, e.g. "upgrade the software version and then restart the associated service."
+
+#### Tracking Installed Software
+- Query package managers (`cargo`, `apt`, etc) to see what software is currently installed, the version and source, etc.
+- Be able to distinguish software installed from a local source vs from an external repo (e.g. `cargo install --path . vs `cargo install <hosted-package>`)
+
+#### Managing Installed Software
+- Take action (with possible user confirmation) to install, upgrade, or uninstall software.
 
 ### Inspiration
 - GNU Stow
