@@ -69,3 +69,6 @@ Open question: Is this vision trying to solve some of the same things as those i
 - [ ] Integration with github
   - [ ] Set up github REST api polling. We can't use webhooks for orgs/repos we don't own.
   - [ ] Alternative to polling individual repos, we can poll the authorized user's notifications?
+
+## Open questions:
+- [ ] Does should the software version updater bot ("verbot") be in the same project as the symlink farm manager manager bot ("symbot")?
