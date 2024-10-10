@@ -56,3 +56,16 @@ Open question: Is this vision trying to solve some of the same things as those i
 - RaphGL/tuckr
 - yadam
 - knowledge graphs
+
+## ROADMAP:
+- [ ] weigh tradeoffs postgres vs sqlite
+- [ ] first useful behavior: create PR branch / worktree for a given purpose in a local worktree
+  - [ ] create tables:
+    - [ ] in the "git" namespace/schema: "local_repos", "local_branches", "local_worktrees". Populate with some local data.
+    - [ ] create tables "deps" and "dep_versions". Populate with data on some deps / dep versions. 
+    - [ ] create a table "upgrade_deps" in the "issues" namespace/schema. Populate with data on a dep I'd like to upgrade.
+  - [ ] propose a worktree name based on the name of the local_repo and the dep to be upgraded
+  - [ ] execute the git command to create the worktree
+- [ ] Integration with github
+  - [ ] Set up github REST api polling. We can't use webhooks for orgs/repos we don't own.
+  - [ ] Alternative to polling individual repos, we can poll the authorized user's notifications?
