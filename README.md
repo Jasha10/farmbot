@@ -68,7 +68,8 @@ and perhaps LLMs could be used to attempt some other parts.
 - knowledge graphs
 
 ## ROADMAP:
-- [ ] weigh tradeoffs postgres vs sqlite
+We should start with a minimum
+- [-] weigh tradeoffs postgres vs sqlite (see [ADRs/2024-10-11_postgres_vs_sqlite.md](ADRs/2024-10-11_postgres_vs_sqlite.md))
 - [ ] first useful behavior: create PR branch / worktree for a given purpose in a local worktree
   - [ ] create tables:
     - [ ] in the "git" namespace/schema: "local_repos", "local_branches", "local_worktrees". Populate with some local data.
