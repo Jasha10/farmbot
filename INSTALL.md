@@ -1,3 +1,4 @@
-For now, clone the source and use `cargo install --path`.
-
-
+For now, clone the source and use cargo to install:
+```
+cargo install --path .
+```

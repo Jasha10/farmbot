@@ -1,0 +1,15 @@
+name: RustBuildTest
+on:
+  "push": {"branches": ["main"]}
+  "pull_request": {"branches": ["main"]}
+env: {"CARGO_TERM_COLOR": "always"}
+jobs:
+  build_and_test:
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swatinem/rust-cache@v2
+      - uses: extractions/setup-just@v2
+      - run: just devops/build
+      - run: just devops/test
+    runs-on: ${{ matrix.os }}
+    "strategy": {"matrix": {"os": [ubuntu-latest, macos-latest]}}

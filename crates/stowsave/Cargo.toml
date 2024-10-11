@@ -1,0 +1,18 @@
+[package]
+name = "stowsave"
+version = "0.1.6"
+edition = "2021"
+license = "MIT"
+description = "Automates moving files into a stow directory then using stow to create symlinks back to where the files came from"
+
+[dependencies]
+anyhow = "1"
+thiserror = "1"
+pathdiff = "0.2"
+path-clean = "1"
+clap = { version = "4", features = ["derive"] }
+fs_extra = "1"
+[dev-dependencies]
+assert_cmd = "2"
+predicates = "3"
+tempfile = "3"
