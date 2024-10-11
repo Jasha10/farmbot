@@ -1,1 +1,3 @@
-Nothing to install -- this project is just a skelaton for now.
+For now, clone the source and use `cargo install --path`.
+
+
