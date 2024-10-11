@@ -59,7 +59,13 @@ of those config files :)
 Rather, if you make a change to that part of your bashrc, farmbot (which is watching for file changes) should
 see what you've done and offer to make similar changes to your nushell / zsh configs.
 Perhaps some simple transformation rules could be used for part of the translation,
-and perhaps LLMs could be used to attempt some other parts.
+and perhaps LLMs could be used to attempt some other parts. Farmbot may even offer to open a shell for you to
+test out the new shell config that it's written (e.g. to verify that an alias has been translated correctly).
+Some judgement calls could be made by LLMs, e.g. should we translate this shell function between different shells
+or encapsulate it as a shebanged script that could be portable between different shells?
+
+When I'm iteratively working on dotfiles (e.g. writing to and saving a nushell config repeatedly), farmbot
+should keep track of the changes I've made and use that sequence of changes to update its suggested translations intelligently.
 
 ## Inspiration
 - GNU Stow
@@ -80,6 +86,7 @@ We should start with a minimum
 - [ ] Integration with github
   - [ ] Set up github REST api polling. We can't use webhooks for orgs/repos we don't own.
   - [ ] Alternative to polling individual repos, we can poll the authorized user's notifications?
+- [ ] automatically detect when origin/{main,master} has been updated and pull to the local clone for tracked repos
 
 ## Open questions:
 - [ ] Does should the software version updater bot ("verbot") be in the same project as the symlink farm manager manager bot ("symbot")?
