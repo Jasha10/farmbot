@@ -3,7 +3,10 @@ set working-directory := '..'
 publish $CARGO_API_TOKEN:
     # Use $CARGO_API_TOKEN rather than {{ CARGO_API_TOKEN }} to avoid
     # printing the token in just output.
-    cargo publish --verbose --locked --token $CARGO_API_TOKEN
+
+    cargo install cargo-release
+    cargo release
+    # cargo publish --verbose --locked --token $CARGO_API_TOKEN
 
 build:
   cargo build --all --verbose
