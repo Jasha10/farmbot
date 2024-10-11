@@ -8,6 +8,12 @@ publish $CARGO_API_TOKEN:
     cargo release
     # cargo publish --verbose --locked --token $CARGO_API_TOKEN
 
+# Bump the version in Cargo.toml and Cargo.lock
+bump:
+    cargo install cargo-release
+    cargo release version patch --execute
+
+
 build:
   cargo build --all --verbose
 
