@@ -1,9 +1,17 @@
 [package]
 name = "farmbot"
-version = "0.0.1"
-edition = "2021"
+description = "Farm manager manager bot"
+homepage = "https://github.com/jasha10/farmbot"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
 
 [dependencies]
 
 [workspace]
 members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.7"
+edition = "2021"
+license = "MIT"

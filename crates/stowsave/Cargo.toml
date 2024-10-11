@@ -1,9 +1,10 @@
 [package]
 name = "stowsave"
-version = "0.1.6"
-edition = "2021"
-license = "MIT"
 description = "Automates moving files into a stow directory then using stow to create symlinks back to where the files came from"
+homepage = "https://github.com/Jasha10/farmbot/tree/main/crates/stowsave"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
 
 [dependencies]
 anyhow = "1"
