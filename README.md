@@ -4,9 +4,9 @@ If GNU stow is a "symlink farm manager," this tool will be a multi-purpose farmi
 See [INSTALL.md](INSTALL.md) and [USAGE.md](USAGE.md) to get started.
 
 ## Vision & Goals:
-I spend lots of time updating dependencies -- both locally installed tools and dependency pins on software projects.
-Keeping these up to date improves developer quality of life.
-I also spend time fiddling with symlinks a la GNU stow / tuckr / yadam -- moving files into my local "dotfiles" repository, creating symlinks to those dotfiles on the local machine, and making sure those symlinks stay up to date.
+As a developer, I spend lots of time manually doing things that could theoretically be automated -- updating versions of dependencies (both locally installed tools and dependency pins on software projects), maintaining my symlink farm (a la GNU stow), and keeping my dotfiles in sync across various shells and platforms (I want the same aliases defined in bash, zsh, and nushell, with variations for linux/mac/windows).
+
+Automating these tasks requires either a really smart AI (we're not there yet) or a pretty-smart knowledge graph (which has been theoretically possible for decades).
 
 ## Goals:
 I want to create a monolithic automation framework that will run on my local machine. It will be data driven (probably backed by postgres or sqlite), written primarily in rust, and will run in the background to detect when actions should be taken. I hope to create command line tools and a GUI for viewing and modifiying the bot's behavior.
@@ -51,7 +51,17 @@ Open question: Is this vision trying to solve some of the same things as those i
 ##### Managing Installed Software
 - Take action (with possible user confirmation) to install, upgrade, or uninstall software.
 
-### Inspiration
+### Keeping dotfiles in sync
+Like how `conda` writes a "managed by conda" section to your bashrc, I envision a "managed by farmbot"
+section in my bashrc / zshrc / nushell config. Unlike the conda snippet, this will not be a read-only section
+of those config files :)
+
+Rather, if you make a change to that part of your bashrc, farmbot (which is watching for file changes) should
+see what you've done and offer to make similar changes to your nushell / zsh configs.
+Perhaps some simple transformation rules could be used for part of the translation,
+and perhaps LLMs could be used to attempt some other parts.
+
+## Inspiration
 - GNU Stow
 - RaphGL/tuckr
 - yadam
