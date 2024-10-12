@@ -8,22 +8,21 @@ publish $CARGO_API_TOKEN:
     cargo release
     # cargo publish --verbose --locked --token $CARGO_API_TOKEN
 
-# Bump the version in Cargo.toml and Cargo.lock
+# Bump the version in Cargo.toml and Cargo.lock, commit the changes, and tag the commit
 bump:
     cargo install cargo-release
     # Update Cargo.toml and Cargo.lock
     cargo release version patch --execute --verbose --no-confirm
     # commit the changes
     cargo release commit --execute --verbose --no-confirm
-    just tag
+    just --justfile {{ justfile() }} tag
 
+# Create a git tag based on the version string found in Cargo.toml
+tag:
+  rg '^version = "\d+\.\d+\.\d+"$' Cargo.toml | sd '^version = "(\d+\.\d+\.\d+)"$' '$1' | xargs git tag
 
 build:
   cargo build --all --verbose
 
 test:
   cargo test --all --verbose
-
-# Create a git tag based on the version string found in Cargo.toml
-tag:
-  rg '^version = "\d+\.\d+\.\d+"$' Cargo.toml | sd '^version = "(\d+\.\d+\.\d+)"$' '$1' | xargs git tag
