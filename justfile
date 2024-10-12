@@ -6,5 +6,8 @@ install_stowsave:
   cargo install --path crates/stowsave
 
 ps:
+  just devops/push
+
+bp:
   just devops/bump
   just devops/push
