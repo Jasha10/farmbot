@@ -16,7 +16,9 @@ bump:
     # commit the changes
     cargo release commit --execute --no-confirm
     # tag the commit as 'v{VERSION}'
-    cargo release tag --workspace --execute --no-confirm
+    # We do not pass the --workspace flag as that would create
+    # a separate tag for each workspace package, e.g. stowsave-v{VERSION}
+    cargo release tag --execute --no-confirm
 
 # Push branch and tag to the remote repo
 push:

@@ -4,3 +4,7 @@ install_farmbot:
 
 install_stowsave:
   cargo install --path crates/stowsave
+
+ps:
+  just devops/bump
+  just devops/push
