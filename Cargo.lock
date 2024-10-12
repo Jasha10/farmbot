@@ -181,7 +181,7 @@ dependencies = [
 
 [[package]]
 name = "farmbot"
-version = "0.1.12"
+version = "0.1.13"
 
 [[package]]
 name = "fastrand"
@@ -379,7 +379,7 @@ dependencies = [
 
 [[package]]
 name = "stowsave"
-version = "0.1.12"
+version = "0.1.13"
 dependencies = [
  "anyhow",
  "assert_cmd",
