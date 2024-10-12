@@ -16,11 +16,11 @@ bump:
     # commit the changes
     cargo release commit --execute --no-confirm
     # tag the commit as 'v{VERSION}'
-    cargo release tag --execute --no-confirm
+    cargo release tag --workspace --execute --no-confirm
 
 # Push branch and tag to the remote repo
 push:
-    cargo release push --execute --no-confirm
+    cargo release push --workspace --execute --no-confirm
 
 build:
   cargo build --all --verbose
