@@ -11,7 +11,10 @@ publish $CARGO_API_TOKEN:
 # Bump the version in Cargo.toml and Cargo.lock
 bump:
     cargo install cargo-release
-    cargo release version patch --execute
+    # Update Cargo.toml and Cargo.lock
+    cargo release version patch --execute --verbose --no-confirm
+    # commit the changes
+    cargo release commit --execute --verbose --no-confirm
 
 
 build:
