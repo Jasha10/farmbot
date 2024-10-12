@@ -15,6 +15,7 @@ bump:
     cargo release version patch --execute --verbose --no-confirm
     # commit the changes
     cargo release commit --execute --verbose --no-confirm
+    just tag
 
 
 build:
@@ -22,3 +23,7 @@ build:
 
 test:
   cargo test --all --verbose
+
+# Create a git tag based on the version string found in Cargo.toml
+tag:
+  rg '^version = "\d+\.\d+\.\d+"$' Cargo.toml | sd '^version = "(\d+\.\d+\.\d+)"$' '$1' | xargs git tag
