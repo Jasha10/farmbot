@@ -9,5 +9,5 @@ ps:
   just devops/push
 
 bp:
-  just devops/bump
-  just devops/push
+  just devops/bump  # bump version, which will trigger gh workflow to release to crates.io
+  just devops/push  # push to github

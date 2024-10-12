@@ -2,8 +2,10 @@ set working-directory := '..'
 
 publish $CARGO_REGISTRY_TOKEN:
     # $CARGO_REGISTRY_TOKEN will be set as an environment variable for the following commands.
-    cargo install cargo-release
-    cargo release publish --workspace --execute --no-confirm
+    # cargo install cargo-release
+    # cargo release publish --workspace --execute --no-confirm
+    cargo install cargo-smart-release
+    cargo smart-release --update-crates-index
 
 # Bump the version in Cargo.toml and Cargo.lock, commit the changes, and tag the commit
 bump:
