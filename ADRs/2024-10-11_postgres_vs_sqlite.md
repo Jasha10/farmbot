@@ -32,3 +32,7 @@ Should we maintain two separate databases, one for confidential work stuff and o
 that can be shared via git?
 - Merging those two data sources at runtime sounds like a pain.
 - Maintaining `no_vcs` or `no_dump` or `confidential` columns in the DB also sounds annoying.
+Ok, here's what I've worked out as a workflow:
+- create a copy of the db
+- operating on that copy, do a cascading delete of all the stuff that's marked as confidential
+- dump that modified DB that's expunged of confidential stuff.
