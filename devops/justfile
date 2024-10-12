@@ -10,17 +10,16 @@ publish $CARGO_API_TOKEN:
 
 # Bump the version in Cargo.toml and Cargo.lock, commit the changes, and tag the commit
 bump:
+    # check that the worktree is clean
+    [ -z "$(git status --porcelain)" ]
+
     cargo install cargo-release
     # Update Cargo.toml and Cargo.lock
     cargo release version patch --execute --no-confirm
     # commit the changes
     cargo release commit --execute --no-confirm
+    # tag the commit as e.g. v0.1.12
     cargo release tag --execute --no-confirm
-    # just --justfile {{ justfile() }} tag
-
-# # Create a git tag based on the version string found in Cargo.toml
-# tag:
-#   rg '^version = "\d+\.\d+\.\d+"$' Cargo.toml | sd '^version = "(\d+\.\d+\.\d+)"$' '$1' | xargs git tag
 
 build:
   cargo build --all --verbose
