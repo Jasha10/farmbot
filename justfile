@@ -23,3 +23,7 @@ migrate_info:
 
 dump_schema:
   sqlite3 ./farmbot.db .schema > schema.sql
+  sql-formatter --fix ./schema.sql
+
+watch_dump_schema:
+  watchexec --on-busy-update queue --debounce 1s --filter ./farmbot.db -- just dump_schema
