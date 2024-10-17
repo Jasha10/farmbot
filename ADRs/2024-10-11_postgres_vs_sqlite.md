@@ -32,3 +32,8 @@ Should we maintain two separate databases, one for confidential work stuff and o
 that can be shared via git?
 - Merging those two data sources at runtime sounds like a pain.
 - Maintaining `no_vcs` or `no_dump` or `confidential` columns in the DB also sounds annoying.
+
+## Revising this on 2024-10-17 after using sqlite a little bit
+Cons of sqlite:
+- support for e.g. dates is not first class
+- you have to opt in to foreign key constraints with a pragma
