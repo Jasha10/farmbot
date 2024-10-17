@@ -18,7 +18,14 @@ CREATE TABLE local_git_repo_clones (
 
 CREATE TABLE tools (name TEXT NOT NULL PRIMARY KEY);
 
-CREATE TABLE tool_versions (
-  tool TEXT NOT NULL PRIMARY KEY REFERENCES tools (name),
-  version TEXT NOT NULL
+CREATE TABLE tool_websites (
+  tool TEXT NOT NULL REFERENCES tools (name),
+  url TEXT NOT NULL,
+  PRIMARY KEY (tool, url)
+);
+
+CREATE TABLE IF NOT EXISTS "tool_versions" (
+  tool TEXT not null references tools,
+  version TEXT not null,
+  PRIMARY KEY (tool, version)
 );

@@ -26,4 +26,4 @@ dump_schema:
   sql-formatter --fix ./schema.sql
 
 watch_dump_schema:
-  watchexec --on-busy-update queue --debounce 1s --filter ./farmbot.db -- just dump_schema
+  watchexec --on-busy-update queue --debounce 1s -e db --filter ./farmbot.db -- just dump_schema
