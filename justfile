@@ -25,5 +25,9 @@ dump_schema:
   sqlite3 ./farmbot.db .schema > schema.sql
   sql-formatter --fix ./schema.sql
 
+dump_db:
+  sqlite3 ./farmbot.db .dump > dump.sql
+  sql-formatter --fix ./dump.sql
+
 watch_dump_schema:
   watchexec --on-busy-update queue --debounce 1s -e db --filter ./farmbot.db -- just dump_schema
