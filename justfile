@@ -20,3 +20,6 @@ migrate_run:
 
 migrate_info:
   sqlx migrate info
+
+dump_schema:
+  sqlite3 ./farmbot.db .schema > schema.sql
