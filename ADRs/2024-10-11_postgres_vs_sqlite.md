@@ -37,3 +37,4 @@ that can be shared via git?
 Cons of sqlite:
 - support for e.g. dates is not first class
 - you have to opt in to foreign key constraints with a pragma
+- sqlite views are read-only (not updateable)
