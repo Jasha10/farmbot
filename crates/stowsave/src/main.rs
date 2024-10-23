@@ -80,7 +80,7 @@
 
 use std::path::{Path, PathBuf};
 
-use anyhow::{Context, Result};
+use anyhow::{ensure, Context, Result};
 use clap::Parser;
 use command::{Command, CommandImpl};
 use util::find_common_ancestor;
@@ -127,6 +127,8 @@ fn backup_path_command(original: &Path) -> Command {
 fn collect_commands(args: &Args) -> Result<Vec<Command>> {
     let mut commands = Vec::new();
 
+    ensure!(args.path_to_save.exists(), "Path does not exist");
+    ensure!(!args.path_to_save.is_symlink(), "Cannot save symlinks");
     let path_to_save = args
         .path_to_save
         .canonicalize()
@@ -134,6 +136,7 @@ fn collect_commands(args: &Args) -> Result<Vec<Command>> {
 
     commands.push(backup_path_command(&path_to_save));
 
+    ensure!(args.stow_package.exists(), "Stow package does not exist");
     let stow_pkg = args
         .stow_package
         .canonicalize()
