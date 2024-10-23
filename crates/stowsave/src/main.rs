@@ -105,16 +105,15 @@ struct Args {
 
 fn main() -> Result<()> {
     let args = Args::parse();
-
-    let commands = collect_commands(&args)?;
-
-    execute_commands(commands, args.verbose)?;
-
-    // TODO:
-    // checks::check_that_symlink_has_been_created(&args.path_to_save, &args.stow_package)?;
-
-    println!("Path successfully saved, backed up, and stowed");
+    run_args(args)?;
+    // TODO: checks::check_that_symlink_has_been_created(&args.path_to_save, &args.stow_package)?;
     Ok(())
+}
+
+fn run_args(args: Args) -> Result<()> {
+    let commands = collect_commands(&args)?;
+    execute_commands(commands, args.verbose)?;
+    return Ok(());
 }
 
 fn backup_path_command(original: &Path) -> Command {

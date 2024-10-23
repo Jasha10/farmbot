@@ -1,33 +1,33 @@
-// use assert_cmd::Command;
-// use predicates::prelude::*;
-// use std::fs::{self, File};
-// use std::io::Write;
-// use tempfile::TempDir;
-//
-// #[test]
-// fn test_stowsave_single_file() -> Result<(), Box<dyn std::error::Error>> {
-//     let temp_dir = TempDir::new()?;
-//     let home_dir = temp_dir.path().join("home");
-//     let stow_dir = temp_dir.path().join("stow");
-//
-//     fs::create_dir_all(&home_dir)?;
-//     fs::create_dir_all(&stow_dir)?;
-//
-//     let vimrc_path = home_dir.join(".vimrc");
-//     let mut vimrc_file = File::create(&vimrc_path)?;
-//     writeln!(vimrc_file, "set number")?;
-//
-//     let mut cmd = Command::cargo_bin("stowsave")?;
-//     cmd.arg(&vimrc_path).arg(&stow_dir);
-//     cmd.assert().success();
-//
-//     assert!(vimrc_path.with_extension("bak").exists());
-//     assert!(stow_dir.join(".vimrc").exists());
-//     assert!(vimrc_path.is_symlink());
-//
-//     Ok(())
-// }
-//
+use assert_cmd::Command;
+use predicates::prelude::*;
+use std::fs::{self, File};
+use std::io::Write;
+use tempfile::TempDir;
+
+#[test]
+fn test_stowsave_single_file() -> Result<(), Box<dyn std::error::Error>> {
+    let temp_dir = TempDir::new()?;
+    let home_dir = temp_dir.path();
+    let stow_package_dir = temp_dir.path().join("stow").join("package");
+
+    fs::create_dir_all(&home_dir)?;
+    fs::create_dir_all(&stow_package_dir)?;
+
+    let vimrc_path = home_dir.join(".vimrc");
+    let mut vimrc_file = File::create(&vimrc_path)?;
+    writeln!(vimrc_file, "set number")?;
+
+    let mut cmd = Command::cargo_bin("stowsave")?;
+    cmd.arg(&vimrc_path).arg(&stow_package_dir);
+    let assert = cmd.assert();
+
+    assert!(vimrc_path.with_extension("bak").exists());
+    assert!(stow_package_dir.join(".vimrc").exists());
+    assert!(vimrc_path.is_symlink());
+
+    Ok(())
+}
+
 // #[test]
 // fn test_stowsave_directory() -> Result<(), Box<dyn std::error::Error>> {
 //     let temp_dir = TempDir::new()?;
