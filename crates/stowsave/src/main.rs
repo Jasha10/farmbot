@@ -29,10 +29,10 @@
 //!
 //! What does the above do?
 //! - Creates a backup of the given `<PATH_TO_SAVE>` file or directory, backing up to
-//! `<PATH_TO_SAVE>.bak`. For directories, the backup is recursive is a recursive copy operation.
+//!   `<PATH_TO_SAVE>.bak`. For directories, the backup is recursive is a recursive copy operation.
 //! - Move the original `<PATH_TO_SAVE>` to the given `<STOW_PACKAGE>`.
 //! - Run `stow` to create symlinks from the `<STOW_PACKAGE>` to the original location of
-//! `<PATH_TO_SAVE>`.
+//!   `<PATH_TO_SAVE>`.
 //!
 //! ## Example
 //! ```
@@ -113,7 +113,7 @@ fn main() -> Result<()> {
 fn run_args(args: Args) -> Result<()> {
     let commands = collect_commands(&args)?;
     execute_commands(commands, args.verbose)?;
-    return Ok(());
+    Ok(())
 }
 
 fn backup_path_command(original: &Path) -> Command {

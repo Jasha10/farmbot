@@ -46,7 +46,7 @@ impl CommandImpl for Command {
                 if verbose {
                     println!("Moving '{}' to '{}'", from.display(), dest_dir.display());
                 }
-                fs_extra::move_items(&vec![from], dest_dir, &CopyOptions::new())?;
+                fs_extra::move_items(&[from], dest_dir, &CopyOptions::new())?;
                 Ok(())
             }
             Command::CreateBackup {

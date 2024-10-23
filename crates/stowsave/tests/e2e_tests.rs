@@ -1,31 +1,104 @@
-use assert_cmd::Command;
-use predicates::prelude::*;
 use std::fs::{self, File};
 use std::io::Write;
+use std::path::PathBuf;
+
+use assert_cmd::Command;
+// use predicates::prelude::*;
 use tempfile::TempDir;
 
 #[test]
-fn test_stowsave_single_file() -> Result<(), Box<dyn std::error::Error>> {
-    let temp_dir = TempDir::new()?;
-    let home_dir = temp_dir.path();
-    let stow_package_dir = temp_dir.path().join("stow").join("package");
+fn test_stowsave_single_file() {
+    Test::new()
+        .with_file(".vimrc", "contents")
+        .with_dir("stow/package")
+        .run(["stowsave", ".vimrc", "stow/package"])
+        .assert_file(".vimrc.bak", "contents")
+        .assert_file("stow/package/.vimrc", "contents")
+        .assert_symlink(".vimrc", "stow/package/.vimrc");
+}
 
-    fs::create_dir_all(&home_dir)?;
-    fs::create_dir_all(&stow_package_dir)?;
+struct Output {
+    temp_dir: TempDir,
+}
 
-    let vimrc_path = home_dir.join(".vimrc");
-    let mut vimrc_file = File::create(&vimrc_path)?;
-    writeln!(vimrc_file, "set number")?;
+#[derive(Default)]
+struct Test {
+    dirs: Vec<String>,
+    files: Vec<(String, String)>, // (file, contents)
+}
 
-    let mut cmd = Command::cargo_bin("stowsave")?;
-    cmd.arg(&vimrc_path).arg(&stow_package_dir);
-    let assert = cmd.assert();
+impl Test {
+    fn new() -> Self {
+        Self::default()
+    }
+    fn with_dir(mut self, dir: impl Into<String>) -> Self {
+        self.dirs.push(dir.into());
+        self
+    }
+    fn with_file(mut self, file: impl Into<String>, contents: impl Into<String>) -> Self {
+        self.files.push((file.into(), contents.into()));
+        self
+    }
+    fn run(self, args: impl IntoIterator<Item = impl Into<String>>) -> Output {
+        //// SETUP
+        // create temporary directory
+        let temp_dir = TempDir::new().unwrap();
+        // create dirs within temporary directory
+        for dir in self.dirs {
+            fs::create_dir_all(temp_dir.path().join(dir)).unwrap();
+        }
+        // create files:
+        for f in self.files {
+            let file_path = temp_dir.path().join(f.0);
+            let parent_dir = file_path.parent().unwrap();
+            // - create parent directory
+            fs::create_dir_all(parent_dir).unwrap();
+            // - create file
+            let mut file = File::create(&file_path).unwrap();
+            write!(file, "{}", f.1).unwrap();
+        }
 
-    assert!(vimrc_path.with_extension("bak").exists());
-    assert!(stow_package_dir.join(".vimrc").exists());
-    assert!(vimrc_path.is_symlink());
+        //// RUN
+        // collect args
+        let args: Vec<String> = args.into_iter().map(Into::into).collect();
+        if args.is_empty() {
+            panic!("No args provided");
+        }
+        let mut cmd = Command::cargo_bin(&args[0]).unwrap();
+        for arg in args.iter().skip(1) {
+            cmd.arg(arg);
+        }
+        cmd.current_dir(temp_dir.path());
+        cmd.assert();
 
-    Ok(())
+        Output { temp_dir }
+    }
+}
+
+// we'll want to move these methods to `impl Test` at some point
+impl Output {
+    fn assert_file(self, file: impl Into<String>, contents: impl Into<String>) -> Self {
+        let file = file.into();
+        let file_path = self.temp_dir.path().join(file);
+        assert!(file_path.exists());
+        let file_contents = fs::read_to_string(&file_path).unwrap();
+        assert!(file_contents == contents.into());
+        self
+    }
+    fn assert_symlink(self, file: impl Into<String>, target: impl Into<PathBuf>) -> Self {
+        let file = file.into();
+        let file_path = self.temp_dir.path().join(file);
+        assert!(file_path.is_symlink());
+        let symlink_target = fs::read_link(&file_path).unwrap();
+        let target = target.into();
+        assert!(
+            symlink_target == target,
+            "Expected {:?}, got {:?}",
+            target,
+            symlink_target
+        );
+        self
+    }
 }
 
 // #[test]
