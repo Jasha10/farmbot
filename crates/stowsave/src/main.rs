@@ -64,11 +64,19 @@
 //!         - remove empty directorie(s) within the stow package that contained the file that's
 //!         been moved.
 //! - [ ] ask for confirmation if it seems that the user is going to stow a directory that contains
-//! symlinks that point into the current or another stow package. For example, running
-//! ```
-//! stowsave .config ~/dotfiles/pkg
-//! ```
-//! might be unwanted if the `.config` folder already contains some symlinks that point into the
+//!       symlinks that point into the current or another stow package. For example, running
+//!       ```
+//!       stowsave .config ~/dotfiles/pkg
+//!       ```
+//!       might be unwanted if the `.config` folder already contains some symlinks that point into the
+//! - [ ] Be able to handle merge situations. E.g. suppose that ~/.hammerspoon contains a `Spoons`
+//!       directory as well as an `init.lua` symlink that points to
+//!       `~/stow/all/.hammerspoon/init.lua`. Running `stowsave ~/.hammerspoon ~/stow/all` should
+//!       merge `~/.hammerspoon/` into `~/stow/all/.hammerspoon/` by moving the `Spoons` directory
+//!       from `~/.hammerspoon/` to `~/stow/all/.hammerspoon/`.
+//! - [ ] Handle multiple arguments as `stowsave foo bar baz ~/qux` to save each of `foo`, `bar`,
+//!       and `baz` into `~/qux`.
+//! - [ ] Print green text for success and red text for failures.
 
 use std::path::{Path, PathBuf};
 
