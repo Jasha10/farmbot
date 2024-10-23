@@ -90,7 +90,7 @@ mod command;
 mod util;
 
 #[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
+#[command(author, version, about, long_about = None, arg_required_else_help = true)]
 struct Args {
     /// Path to the file or directory to save
     path_to_save: PathBuf,
