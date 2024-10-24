@@ -1,7 +1,7 @@
-CREATE TABLE managed_computers (name TEXT NOT NULL PRIMARY KEY);
+CREATE TABLE IF NOT EXISTS "computers" (name TEXT NOT NULL PRIMARY KEY);
 
 CREATE TABLE local_git_repo_clones (
-  computer TEXT NOT NULL REFERENCES managed_computers,
+  computer TEXT NOT NULL REFERENCES "computers",
   local_path TEXT NOT NULL,
   remote_url TEXT NOT NULL,
   PRIMARY KEY (computer, local_path)
@@ -25,52 +25,23 @@ CREATE TABLE package_managers (
   name TEXT NOT NULL PRIMARY KEY REFERENCES tools (name) -- every package manager is a tool
 );
 
-CREATE VIEW aug_package_managers AS
-SELECT
-  pm.name
-FROM
-  package_managers pm
-  JOIN tools t ON pm.name = t.name
-  /* aug_package_managers(name) */;
-
-CREATE VIEW aug_local_git_repo_clones AS
-SELECT
-  lgrc.*
-FROM
-  local_git_repo_clones lgrc
-  JOIN managed_computers mc ON lgrc.computer = mc.name
-  /* aug_local_git_repo_clones(computer,local_path,remote_url) */;
-
-CREATE VIEW aug_tool_websites AS
-SELECT
-  tw.*
-FROM
-  tool_websites tw
-  JOIN tools t ON t.name = tw.tool
-  /* aug_tool_websites(tool,url) */;
-
-CREATE VIEW aug_tool_versions AS
-SELECT
-  tv.*
-FROM
-  tool_versions tv
-  JOIN tools t ON t.name = tv.tool
-  /* aug_tool_versions(tool,version) */;
-
-CREATE TABLE IF NOT EXISTS "installed_commands" (
-  computer TEXT not null REFERENCES managed_computers,
-  command TEXT not null REFERENCES tools (name),
-  package_manager TEXT not null REFERENCES tools (name),
+CREATE TABLE IF NOT EXISTS "managed_packages" (
+  computer TEXT not null references computers,
+  tool TEXT not null references tools,
+  package_manager TEXT not null references package_managers,
   installed_how TEXT not null,
   upgrade_how TEXT not null,
-  current_version TEXT not null,
-  primary key (computer, command, package_manager)
+  version TEXT not null,
+  notes TEXT,
+  primary key (computer, tool, package_manager),
+  foreign key (tool, version) references tool_versions
 );
 
-CREATE VIEW aug_installed_commands AS
-SELECT
-  ic.*
-FROM
-  installed_commands ic
-  JOIN main.managed_computers mc on ic.computer = mc.name
-  /* aug_installed_commands(computer,command,package_manager,installed_how,upgrade_how,current_version) */;
+CREATE TABLE manually_installed_tools (
+  computer TEXT not null references computers,
+  tool TEXT not null references tools,
+  version TEXT not null,
+  notes TEXT,
+  primary key (computer, tool),
+  foreign key (tool, version) references tool_versions
+);
