@@ -33,6 +33,11 @@ that can be shared via git?
 - Merging those two data sources at runtime sounds like a pain.
 - Maintaining `no_vcs` or `no_dump` or `confidential` columns in the DB also sounds annoying.
 
+Ok, here's what I've worked out as a workflow:
+- create a copy of the db
+- operating on that copy, do a cascading delete of all the stuff that's marked as confidential
+- dump that modified DB that's expunged of confidential stuff.
+
 ## Revising this on 2024-10-17 after using sqlite a little bit
 Cons of sqlite:
 - support for e.g. dates is not first class
