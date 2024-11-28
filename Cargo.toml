@@ -2,6 +2,7 @@
 name = "farmbot"
 description = "Farm manager manager bot"
 homepage = "https://github.com/jasha10/farmbot"
+repository.workspace = true
 edition.workspace = true
 license.workspace = true
 version= "0.1.19"
@@ -15,3 +16,4 @@ members = ["crates/*"]
 version = "0.1.19"
 edition = "2021"
 license = "MIT"
+repository = "https://github.com/jasha10/farmbot"
