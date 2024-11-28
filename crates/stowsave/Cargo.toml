@@ -2,10 +2,10 @@
 name = "stowsave"
 description = "Automates moving files into a stow directory then using stow to create symlinks back to where the files came from"
 homepage = "https://github.com/Jasha10/farmbot/tree/main/crates/stowsave"
-repository = "https://github.com/Jasha10/farmbot/"
 edition.workspace = true
 license.workspace = true
 version.workspace = true
+repository.workspace = true
 
 [dependencies]
 anyhow = "1"
